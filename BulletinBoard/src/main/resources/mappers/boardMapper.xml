@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.naver.board">
+ 
+ 	<select id="getAmount" resultType="Integer">
+		select count(bno) from board
+	</select>
+	
+	<select id="getListpage" resultType="com.naver.dto.BoardVO">
+		select * from board order by root desc, step asc
+	</select>
+	
+	<insert id="insert">
+	
+		insert into board (bno, title, writer, content) 
+		values((select nvl2(max(bno), max(bno)+1, 1) from board), #{title}, #{writer}, #{content})
+		<selectKey keyProperty="bno" resultType="Integer" order="AFTER">
+			select max(bno) from board
+		</selectKey>
+	
+	</insert>
+	
+	<update id="updateReadcnt">
+		update board set readcnt = readcnt+1 where bno=#{bno}
+	</update>
+	
+	<select id="read" resultType="com.naver.dto.BoardVO">
+		select * from board where bno = #{bno}
+	</select>
+	
+	<update id="update">
+		update board set title =#{title}, content=#{content}, updatedate=sysdate where bno=#{bno}
+	</update>
+	
+	<delete id="delete">
+		delete from board where bno = #{bno}
+	</delete>
+	
+	<insert id="addAttach">
+		<![CDATA[
+		insert into attach (id, filename, bno)
+		values((select NVL2(max(id), max(id)+1, 1) from attach), #{filename},#{bno})
+		]]>
+	</insert>
+	
+	<select id="getAttach" resultType="string">
+ 		select filename from attach where bno = #{bno}
+ 	</select>
+	
+	<delete id="deleteFile">
+		delete from attach where bno=#{bno} and filename=#{filename}
+	</delete>
+	
+	<delete id="deleteAllFile">
+		delete from attach where bno=#{bno}
+	</delete>
+	
+	<update id="updateRoot">
+		update board set root=bno where bno=#{bno}
+	</update>
+	
+	<update id="updateReply">
+		update board set root=#{parent_root}, step=#{parent_step}+1, indent=#{parent_indent}+1 
+		where bno=#{bno}   
+	</update>
+	
+	<update id="updateStep">
+		update board set step=step+1 where root=#{parent_root} and step>#{parent_step}
+	</update>
+	
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.naver.comment">
+	
+	<insert id="insert">
+	<![CDATA[
+	insert into comments (cno, bno, ment, menter)
+	values ((select nvl2(max(cno), max(cno)+1, 1) from comments),
+	#{bno}, #{ment}, #{menter})
+	]]>
+	</insert>
+	
+	<select id="list" resultType="com.naver.dto.CommentsVO">
+		select * from comments where bno = #{bno} order by cno desc
+	</select>
+	
+	<delete id="delete">
+		delete from comments where cno = #{cno}
+	</delete>
+	
+	<update id="update">
+		update comments set ment=#{ment}, updatedate=sysdate where cno=#{cno}
+	</update>
+	
+	<delete id="deleteByBno">
+		delete from comments where bno = #{bno}
+	</delete>
+	
+</mapper>

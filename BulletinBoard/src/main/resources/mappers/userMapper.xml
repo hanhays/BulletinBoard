@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.naver.user">
+ 	
+ 	<select id="login" resultType="com.naver.dto.LoginTo">
+ 		select * from member where id=#{id} and pw=#{pw}
+ 	</select>
+ 	
+ 	<insert id="enroll">
+ 		insert into member values(#{id},#{pw},#{name},#{birth},#{email})
+ 	</insert>
+ 	
+ 	<update id="revise">
+ 		update member set name=#{name}, birth=#{birth}, email=#{email} where id=#{id} and pw=#{pw}
+ 	</update>
+ 	
+ 	<select id="myinfo" resultType="com.naver.dto.MemberDTO">
+ 		select * from member where id=#{id}
+ 	</select>
+ 	
+ 	<delete id="delete">
+ 		delete from member where id=#{id}
+ 	</delete>
+ 	
+</mapper>
