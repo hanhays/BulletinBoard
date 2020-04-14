@@ -81,8 +81,6 @@
 		$(document).ready(function(){
 			
 			$("button[type='submit']").click(function(event){
-			 /* $("form").attr("method","post");
-				$("form").attr("action", "/board/insert"); */
 				event.preventDefault();
 				
 				var msg = ''
@@ -95,27 +93,29 @@
 				$("form").submit();
 			});
 			
-		
-			$('.fileDrop').on('dragenter dragover', function(event){
-				event.preventDefault();
+			$('button[type="reset"]').click(function(){
+				$('form').each(function(){
+					this.reset();
+				});
 			});
 			
+			
+			$('.fileDrop').on('dragenter dragover', function(event){
+				event. preventDefault();
+			});
+		
 			$('.fileDrop').on('drop', function(event){
 				event.preventDefault();
 				
 				var files = event.originalEvent.dataTransfer.files;
-				/* for(var i; i<files.length;i++){
-					var file = files[i];
-				} */
 				var file = files[0];
 				
 				var formData = new FormData();
-				
 				formData.append("file", file);
 				
 				$.ajax({
 					type		:	'post',
-					url			:	'/uploadajax',
+					url			:	'/board/upload',
 					data		:	formData,
 					dataType	:	'text',
 					processData	:	false, 
@@ -134,17 +134,14 @@
 				
 				$.ajax({
 					type		:	'post',
-					url			:	'/deletefile',
+					url			:	'/board/deletefile',
 					data		:	{
 						filename:filename
 					},
 					dataType	:	'text',
 					success		:	function(data){
 						alert(data);
-						that.parent('div').parent('li').remove();
-						/* $(that).parents('.col-xs-3').remomve(); */
-						/* that.parent('div').parent('li').remove(); */
-						/* $(that).parents('li').remove(); */
+						$(that).parents('li').remove();
 					}
 				});
 			});
