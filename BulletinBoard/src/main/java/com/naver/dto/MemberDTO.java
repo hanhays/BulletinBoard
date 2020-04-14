@@ -9,14 +9,13 @@ public class MemberDTO implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private String id;//20
-	private String pw;//30
-	private String name;//10
+	private String id;
+	private String pw;
+	private String name;
 	private String birth;
 	private String email;
 	
 	public MemberDTO() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public MemberDTO(String id, String pw, String name, String birth, String email) {

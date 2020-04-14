@@ -10,13 +10,11 @@ public class PageTO {
 	private int amount;
 	private int totalPage;
 	private int startNum;
-//	private int endNum; no need with mybatis
 	private int beginPage;
 	private int stopPage;
 	private List<BoardVO> list;
 	
 	public PageTO() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public PageTO(int curPage, int amount, int perPage, int pageLine, int totalPage, int startNum, int endNum,
@@ -28,7 +26,6 @@ public class PageTO {
 		this.pageLine = pageLine;
 		this.totalPage = totalPage;
 		this.startNum = startNum;
-//		this.endNum = endNum;
 		this.beginPage = beginPage;
 		this.stopPage = stopPage;
 	}
@@ -87,14 +84,6 @@ public class PageTO {
 		process();
 	}
 
-//	public int getEndNum() {
-//		return endNum;
-//	}
-//
-//	public void setEndNum(int endNum) {
-//		this.endNum = endNum;
-//	}
-
 	public int getBeginPage() {
 		return beginPage;
 	}
@@ -125,7 +114,6 @@ public class PageTO {
 	private void process() {
 		totalPage = (amount-1)/perPage +1;
 		startNum = (curPage-1)*perPage +1;
-//		endNum = startNum + (perPage-1); if(endNum > amount) endNum = amount;
 		beginPage =((curPage-1)/pageLine)*pageLine+1;
 		stopPage = beginPage+(pageLine-1); if(stopPage > totalPage) stopPage = totalPage;
 	}

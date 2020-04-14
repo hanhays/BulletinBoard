@@ -86,7 +86,7 @@ public class BoardController {
 
 	@RequestMapping(value = "update", method = RequestMethod.GET)
 	public String updateui(Model model, int bno, int curPage) {
-		BoardVO vo = bs.updateui(bno);
+		BoardVO vo = bs.read(bno);
 		model.addAttribute("vo", vo);
 		model.addAttribute("curPage", curPage);
 		return "/board/update";

@@ -39,28 +39,14 @@ public class BoardServiceImpl implements BoardService {
 
 		bdao.insert(vo);
 		bdao.updateRoot(vo.getBno());
-
-		String[] arr = vo.getFilenames();
-		if (arr != null) {
-			for (String filename : vo.getFilenames()) {
-				bdao.addAttach(filename, vo.getBno());
-			}
-		}
+		addfiles(vo);
 	}
 
 	@Override
 	public BoardVO read(int bno) {
 
 		bdao.updateReadcnt(bno);
-
-		BoardVO vo = bdao.read(bno);
-
-		List<String> list = bdao.getAttach(bno);
-
-		String[] filenames = (String[]) list.toArray(new String[list.size()]);
-
-		vo.setFilenames(filenames);
-
+		BoardVO vo = updateui(bno);
 		return vo;
 	}
 
@@ -70,9 +56,7 @@ public class BoardServiceImpl implements BoardService {
 		BoardVO vo = bdao.read(bno);
 		
 		List<String> list = bdao.getAttach(bno);
-
 		String[] filenames = (String[]) list.toArray(new String[list.size()]);
-
 		vo.setFilenames(filenames);
 
 		return vo;
@@ -80,17 +64,9 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void update(BoardVO vo) {
-		
 		bdao.update(vo);
-		
 		bdao.deleteAllFile(vo.getBno());
-		
-		String[] arr = vo.getFilenames();
-		if (arr != null) {
-			for (String filename : vo.getFilenames()) {
-				bdao.addAttach(filename, vo.getBno());
-			}
-		}
+		addfiles(vo);
 	}
 	
 	@Override
@@ -111,14 +87,16 @@ public class BoardServiceImpl implements BoardService {
 		bdao.updateStep(parent_root, parent_step);
 		bdao.insert(vo);
 		bdao.updateReply(vo.getBno(), parent_root, parent_step, parent_indent);
-		
-		String[] arr = vo.getFilenames();
-		if (arr != null) {
-			for (String filename : vo.getFilenames()) {
+		addfiles(vo);
+	}
+
+	private void addfiles(BoardVO vo) {
+		String[] files = vo.getFilenames();
+		if(files != null) {
+			for(String filename : files) {
 				bdao.addAttach(filename, vo.getBno());
 			}
 		}
 	}
-
 
 }
