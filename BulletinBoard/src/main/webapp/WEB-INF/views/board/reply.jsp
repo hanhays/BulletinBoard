@@ -63,17 +63,8 @@
 				<div class="fileDrop"></div>
 			</div>
 			
-			<ul class="uploadedList clearfix">
-			<!-- <li class="col-xs-3">
-					<img alt="gt" src="/resources/img/gt.png">
-					<div >
-						<span>gt.png</span>
-						<a href="#" class="btn btn-danger btn-xs delbtn"><span class="glyphicon glyphicon-remove"></span></a>
-					</div>
-				</li> -->
-			</ul>
+			<ul class="uploadedList clearfix"></ul>
 			
-			<!-- for java script button is pulled from form area -->
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary">Reply</button>
 				<button type="reset" class="btn btn-warning">Reset</button>
@@ -86,8 +77,6 @@
 		$(document).ready(function(){
 			
 			$("button[type='submit']").click(function(event){
-			 /* $("form").attr("method","post");
-				$("form").attr("action", "/board/insert"); */
 				event.preventDefault();
 				
 				var msg = ''
@@ -101,7 +90,9 @@
 			});
 			
 			$('button[type="reset"]').click(function(){
-				
+				$('form').each(function(){
+					this.reset();
+				});
 			});
 			
 		
@@ -113,13 +104,9 @@
 				event.preventDefault();
 				
 				var files = event.originalEvent.dataTransfer.files;
-				/* for(var i; i<files.length;i++){
-					var file = files[i];
-				} */
 				var file = files[0];
 				
 				var formData = new FormData();
-				
 				formData.append("file", file);
 				
 				$.ajax({
@@ -150,10 +137,7 @@
 					dataType	:	'text',
 					success		:	function(data){
 						alert(data);
-						that.parent('div').parent('li').remove();
-						/* $(that).parents('.col-xs-3').remomve(); */
-						/* that.parent('div').parent('li').remove(); */
-						/* $(that).parents('li').remove(); */
+						$(that).parents('li').remove();
 					}
 				});
 			});

@@ -137,15 +137,14 @@
 			$('.fileDrop').on('dragenter dragover', function(event){
 				event.preventDefault();
 			});
+			
 			$('.fileDrop').on('drop', function(event){
 				event.preventDefault();
 				
 				var files = event.originalEvent.dataTransfer.files;
-				
 				var file = files[0];
 				
 				var formData = new FormData();
-				
 				formData.append("file", file);
 				
 				$.ajax({
@@ -166,7 +165,6 @@
 				event.preventDefault();
 				
 				var that = $(this);
-				
 				var filename = that.attr('href');
 				
 				if(confirm('Attention : Are you sure to delete the file?')){
@@ -183,9 +181,7 @@
 						}
 					});
 				}
-				
 			});
-			
 			
 		});
 	</script>

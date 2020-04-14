@@ -157,14 +157,11 @@
 				if(checkImg(filename)){
 					filename = getImgName(filename);
 				}
-				location.assign('/display?filename='+filename);
+				location.assign('/board/display?filename='+filename);
 			});
 
 			$(".btn-primary").click(function(){
 				location.assign("/board/listpage?curPage=${curPage}");				
-			 /* $("form").attr("method", "get");
-				$("form").attr("action", "/board/listpage");
-				$("form").submit(); */
 			});
 			
 			$(".btn-success").click(function(){
@@ -179,6 +176,7 @@
 		    		$("form").attr("method", "get");
 					$("form").attr("action", "/board/delete");
 					$("form").submit();
+					alert("Deleted..");
 		    	}
 			});
 		    
@@ -189,6 +187,7 @@
 		    });
 		   
 			
+		    
 			$('#comment_form').click(function(){
 				$('#myCollapsible').collapse('toggle');
 			});
@@ -221,7 +220,6 @@
 		    getList(bno);
 		    
 		    $("#comments").on("click", ".btn-delete", function(){
-		    	
 		    	var cno = $(this).parent().attr("data-cno");
 		 
 		    	$.ajax({
@@ -240,8 +238,6 @@
 		    	
 		    });
 		    
-		    
-		    
 		    $("#comments").on("click",".btn-update", function(){
 		    	$("#myModal").modal("show");
 		    	
@@ -252,8 +248,6 @@
 		    	$("#modal_ment").val(ment);
 		    	
 		    });
-		    
-		    
 		    
 		    $("#modal_update").click(function(){
 		    	var cno = $("#modal_cno").text();
@@ -279,10 +273,7 @@
 		    	
 		    });
 		    
-		      
-		   
 		});
-		
 		
 		function getList(bno){
 			$.getJSON("/comments/"+bno, function(data){
@@ -306,7 +297,6 @@
 				$("#comments").html(str);
 			});
 		}
-		
 		
 	</script> 
 </body>
