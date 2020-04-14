@@ -99,13 +99,13 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "upload", method = RequestMethod.GET)
-	public void uploadajax() {
+	public void upload() {
 		
 	}
 	
 	@RequestMapping(value = "upload", method = RequestMethod.POST, produces = "text/plain; charset=UTF-8")
 	@ResponseBody
-	public String uploadajax(MultipartHttpServletRequest request) throws IOException {
+	public String upload(MultipartHttpServletRequest request) throws IOException {
 		MultipartFile file = request.getFile("file");
 		return UploadFileUtils.uploadFile(uploadPath, file);
 	}

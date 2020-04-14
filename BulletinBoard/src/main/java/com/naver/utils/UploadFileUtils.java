@@ -21,6 +21,7 @@ public class UploadFileUtils {
 		String savedPath = calcPath(uploadPath);
 		File target = new File(uploadPath+savedPath, savedName);
 		FileCopyUtils.copy(file.getBytes(), target);
+		
 		String type = savedName.substring(savedName.lastIndexOf(".")+1);
 		String uploadFileName = null;
 		if(MediaUtils.getMediaType(type) == null) {
@@ -32,13 +33,12 @@ public class UploadFileUtils {
 	}
 
 	private static String makeThumbnail(String uploadPath, String savedPath, String savedName) throws IOException {
-		String name1 = uploadPath+savedPath+File.separator+"s_"+savedName;
+		String name = uploadPath+savedPath+File.separator+"s_"+savedName;
 		BufferedImage sourceImg = ImageIO.read(new File(uploadPath+savedPath, savedName));
 		BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_EXACT, 100);
-		File f = new File(name1);
 		String formatName = savedName.substring(savedName.lastIndexOf(".")+1);
-		ImageIO.write(destImg, formatName.toUpperCase(), f);
-		return name1.substring(uploadPath.length()).replace(File.separatorChar, '/');
+		ImageIO.write(destImg, formatName.toUpperCase(), new File(name));
+		return name.substring(uploadPath.length()).replace(File.separatorChar, '/');
 	}
 
 	private static String makeIcon(String uploadPath, String savedPath, String savedName) {
